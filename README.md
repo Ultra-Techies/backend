@@ -1,2 +1,2 @@
 # backend
-Backend of the Todoist project
+Backend of the Todolist project
