@@ -56,7 +56,8 @@ mock_response:
 ```json
 {"username":"ernnjf",
  "email":"x.y@gmail.com",
- "display_name":"Abc Def"}
+ "display_name":"Abc Def",
+ "profile_photo":"https://dummyimage.com/161x100.png"}
  ```
  
 8. HTTP: `/update_user` : method: `PUT` parameters: `(id,username,password,email,display_name)` response: `{[updated:true/false]}` description: updates user details
@@ -72,5 +73,5 @@ mock_response:
 ```json
 {"deleted":true,}
 ```
-10. 
+10.
 
