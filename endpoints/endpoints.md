@@ -63,7 +63,7 @@ mock_response:
 
 mock_response:
 ```json
-{"updated":true}
+{"updated":true,}
 ```
 
 9. HTTP: `/delete_task` : method: `DELETE` parameters: `(id)` response: `{[deleted:true/false]}` description: deletes task
