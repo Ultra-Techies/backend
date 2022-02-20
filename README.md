@@ -32,7 +32,7 @@ Backend of the Todolist project
 ```
 
 # API reference
-Easy access to mock responses at the wiki's API page
+Easy access to mock responses at the [wiki's](https://github.com/Ultra-Techies/backend/wiki) API page
 
 API reference at `'/endpoints/endpoints.md'`
 
