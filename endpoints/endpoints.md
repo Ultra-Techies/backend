@@ -50,7 +50,7 @@ mock_response:
 {"deleted":true,}
 ```
 
-7. HTTP: `/login` : method: `GET` parameters: `(id)` response: `{username:,email:,display_name:,profile_photo}` description: returns user details for an already authenticated user
+7. HTTP: `/user` : method: `GET` parameters: `(id)` response: `{username:,email:,display_name:,profile_photo}` description: returns user details for an already authenticated user
 
 mock_response:
 ```json
