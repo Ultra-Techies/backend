@@ -19,10 +19,16 @@ mock_responses:
 
 mock_responses:
 ```json
-{"valid":true,}
+{
+   "valid":"true",
+   "id":123
+}
 ```
 ```json
-{"valid":false,}
+{
+   "valid":"false",
+   "id":0
+}
 ```
 
 3. HTTP: `/create_task` : method: `POST` parameters: `(id,user_id,title,description,due_date,status)` response: `{[created:true/false],[id:]}` description: returns true if task has been created 
