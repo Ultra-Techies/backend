@@ -12,7 +12,10 @@ mock_responses:
 "id":}
 ```
 
-2. HTTP: `/auth` : method: `GET` parameters: `(username,password)` response: `{valid:true/false}` description: returns valid:true if username and password match to those in db
+2. HTTP: `/auth` : method: `GET` parameters: `(username,password)` response: `{
+   "valid":"true/false",
+   "id":123
+}` description: returns valid:true and user id if username and password match to those in db
 
 mock_responses:
 ```json
