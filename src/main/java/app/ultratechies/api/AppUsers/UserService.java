@@ -1,6 +1,7 @@
 package app.ultratechies.api.AppUsers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -11,12 +12,8 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-
+    @Autowired
     private final UserRepository userRepository;
-
-    public List<AppUser> getUsers() {
-        return userRepository.findAll();
-    }
 
     @Autowired
     public UserService(UserRepository userRepository){
@@ -33,6 +30,7 @@ public class UserService {
         userRepository.save(appUser);
 
     }
+
 
     public void deleteUser(Long userId) {
        boolean exists= userRepository.existsById(userId);
@@ -88,5 +86,9 @@ public class UserService {
 
                             appUser.setPhoto(photo);
                         }
+    }
+
+    public Optional <AppUser> getUsers(Long id) {
+        return userRepository.findById(id);
     }
 }

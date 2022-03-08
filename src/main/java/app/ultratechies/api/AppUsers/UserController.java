@@ -1,9 +1,11 @@
 package app.ultratechies.api.AppUsers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/user")
@@ -16,9 +18,11 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
-    public List<AppUser> getUsers(){
-        return userService.getUsers();
+    @GetMapping("{userId}")
+    public ResponseEntity <Optional<AppUser>>getUser(@PathVariable Long userId){
+
+       var appuser= userService.getUsers(userId);
+       return  ResponseEntity.ok(appuser);
     }
 
     @PostMapping
