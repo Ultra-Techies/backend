@@ -1,11 +1,9 @@
 package app.ultratechies.api.AppUsers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -88,7 +86,16 @@ public class UserService {
                         }
     }
 
-    public Optional <AppUser> getUsers(Long id) {
+    public Optional <AppUser> getUsersById(Long id) {
+        boolean exists= userRepository.existsById(id);
+        if (!exists){
+            throw new IllegalStateException("user with userId:"+ id +" does not exist!");
+        }
         return userRepository.findById(id);
+    }
+
+    public Optional <AppUser> getUserByUsername(String username) {
+
+        return userRepository.findAppUserByUsername(username);
     }
 }

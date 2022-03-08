@@ -1,10 +1,11 @@
 package app.ultratechies.api.AppUsers;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -21,22 +22,30 @@ public class UserController {
     @GetMapping("{userId}")
     public ResponseEntity <Optional<AppUser>>getUser(@PathVariable Long userId){
 
-       var appuser= userService.getUsers(userId);
+       var appuser= userService.getUsersById(userId);
        return  ResponseEntity.ok(appuser);
     }
 
     @PostMapping
-    public void registerNewUser(@RequestBody AppUser appUser){
+    public ResponseEntity <Optional<AppUser>> registerNewUser(@RequestBody AppUser appUser){
+
         userService.addNewUser(appUser);
+        var appuser= userService.getUserByUsername(appUser.getUsername());
+
+        return ResponseEntity.ok(appuser);
     }
 
     @DeleteMapping(path = "{userId}")
-    public void deleteUser(@PathVariable("userId") Long userId){
+    public ResponseEntity<String> deleteUser(@PathVariable("userId") Long userId){
+
         userService.deleteUser(userId);
+        JSONObject deleteMessage= new JSONObject();
+        deleteMessage.put("message","deleted successfully!");
+        return ResponseEntity.status(HttpStatus.OK).body(deleteMessage.toString());
     }
 
     @PutMapping(path = "{userId}")
-    public void updateUser(@PathVariable("userId") Long userId,
+    public ResponseEntity<Optional<AppUser>> updateUser(@PathVariable("userId") Long userId,
                            @RequestParam(required = false) String username,
                            @RequestParam(required = false) String name,
                            @RequestParam(required = false) String email,
@@ -44,5 +53,7 @@ public class UserController {
                            @RequestParam(required = false) String password){
 
                             userService.updateUser(userId,username,name,email,photo,password);
+                            var appuser= userService.getUsersById(userId);
+                            return ResponseEntity.ok(appuser);
     }
 }
