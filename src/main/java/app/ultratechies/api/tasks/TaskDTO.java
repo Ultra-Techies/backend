@@ -12,6 +12,7 @@ public class TaskDTO {
 
     String title;
     String description;
-    String date;
+    String dueDate;
+    String reminder;
     String status;
 }

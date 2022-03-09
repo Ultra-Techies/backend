@@ -30,7 +30,9 @@ public class Task {
     @Column
     private String description;
     @Column
-    Instant date;
+    Instant dueDate;
+    @Column
+    Instant reminder;
     @Column
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
