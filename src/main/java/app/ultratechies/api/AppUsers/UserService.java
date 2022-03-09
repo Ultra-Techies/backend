@@ -111,11 +111,11 @@ public class UserService {
 
     private UserDTO convertEntityToDto(AppUser appuser){
         UserDTO userdto= new UserDTO();
-        userdto.setId(userdto.getId());
-        userdto.setUsername(userdto.getUsername());
-        userdto.setName(userdto.getName());
-        userdto.setEmail(userdto.getEmail());
-        userdto.setPhoto(userdto.getPhoto());
+        userdto.setId(appuser.getId());
+        userdto.setUsername(appuser.getUsername());
+        userdto.setName(appuser.getName());
+        userdto.setEmail(appuser.getEmail());
+        userdto.setPhoto(appuser.getPhoto());
 
         return userdto;
     }
