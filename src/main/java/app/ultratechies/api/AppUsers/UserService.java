@@ -87,17 +87,10 @@ public class UserService {
                         }
     }
 
-    /**public Optional <AppUser> getUsersById(Long id) {
-        boolean exists= userRepository.existsById(id);
-        if (!exists){
-            throw new IllegalStateException("user with userId:"+ id +" does not exist!");
-        }
-        return userRepository.findById(id);
-    }**/
 
-    public Optional <AppUser> getUserByUsername(String username) {
+    public Optional <UserDTO> getUserByUsername(String username) {
 
-        return userRepository.findAppUserByUsername(username);
+        return userRepository.findAppUserByUsername(username).map(this::convertEntityToDto);
     }
 
     public Optional<UserDTO> getUsersById(Long id){

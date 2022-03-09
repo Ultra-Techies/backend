@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity <Optional<AppUser>> registerNewUser(@RequestBody AppUser appUser){
+    public ResponseEntity<Optional<UserDTO>> registerNewUser(@RequestBody AppUser appUser){
 
         userService.addNewUser(appUser);
         var appuser= userService.getUserByUsername(appUser.getUsername());
