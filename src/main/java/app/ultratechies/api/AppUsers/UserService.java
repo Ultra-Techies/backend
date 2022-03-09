@@ -1,5 +1,6 @@
 package app.ultratechies.api.AppUsers;
 
+import app.ultratechies.api.AppUsers.DTO.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -86,16 +87,36 @@ public class UserService {
                         }
     }
 
-    public Optional <AppUser> getUsersById(Long id) {
+    /**public Optional <AppUser> getUsersById(Long id) {
         boolean exists= userRepository.existsById(id);
         if (!exists){
             throw new IllegalStateException("user with userId:"+ id +" does not exist!");
         }
         return userRepository.findById(id);
-    }
+    }**/
 
     public Optional <AppUser> getUserByUsername(String username) {
 
         return userRepository.findAppUserByUsername(username);
+    }
+
+    public Optional<UserDTO> getUsersById(Long id){
+        boolean exists= userRepository.existsById(id);
+        if (!exists){
+            throw new IllegalStateException("user with userId:"+ id +" does not exist!");
+        }
+        return userRepository.findById(id).map(this::convertEntityToDto);
+    }
+
+
+    private UserDTO convertEntityToDto(AppUser appuser){
+        UserDTO userdto= new UserDTO();
+        userdto.setId(userdto.getId());
+        userdto.setUsername(userdto.getUsername());
+        userdto.setName(userdto.getName());
+        userdto.setEmail(userdto.getEmail());
+        userdto.setPhoto(userdto.getPhoto());
+
+        return userdto;
     }
 }
