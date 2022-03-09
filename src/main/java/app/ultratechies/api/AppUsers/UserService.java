@@ -1,5 +1,6 @@
 package app.ultratechies.api.AppUsers;
 
+import app.ultratechies.api.exceptions.AppUserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -92,6 +93,11 @@ public class UserService {
             throw new IllegalStateException("user with userId:"+ id +" does not exist!");
         }
         return userRepository.findById(id);
+    }
+
+    public AppUser getAppUser(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new AppUserNotFoundException("User does not exist"));
     }
 
     public Optional <AppUser> getUserByUsername(String username) {

@@ -1,6 +1,10 @@
 package app.ultratechies.api.AppUsers;
 
+import app.ultratechies.api.tasks.Task;
+
 import javax.persistence.*;
+import java.util.List;
+
 
 @Entity
  @Table
@@ -22,25 +26,31 @@ public class AppUser {
     private String email;
     private String photo;
     private String password;
+    @OneToMany
+    private List<Task> tasks;
+
+
 
     public AppUser() {
     }
 
-    public AppUser(Long id, String username, String name, String email, String photo, String password) {
+    public AppUser(Long id, String username, String name, String email, String photo, String password,List<Task> tasks) {
         this.id = id;
         this.username = username;
         this.name = name;
         this.email = email;
         this.photo = photo;
         this.password = password;
+        this.tasks = tasks;
     }
 
-    public AppUser(String username, String name, String email, String photo, String password) {
+    public AppUser(String username, String name, String email, String photo, String password,List<Task> tasks) {
         this.username = username;
         this.name = name;
         this.email = email;
         this.photo = photo;
         this.password = password;
+        this.tasks = tasks;
     }
 
     public Long getId() {
@@ -67,6 +77,10 @@ public class AppUser {
         return password;
     }
 
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -91,15 +105,20 @@ public class AppUser {
         this.password = password;
     }
 
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+
     @Override
     public String toString() {
-        return "User{" +
+        return "AppUser{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", photo='" + photo + '\'' +
                 ", password='" + password + '\'' +
+                ", tasks=" + tasks +
                 '}';
     }
 }
