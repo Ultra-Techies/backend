@@ -1,5 +1,6 @@
 package app.ultratechies.api.AppUsers;
 
+import app.ultratechies.api.AppUsers.UserDTO.UserDto;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,14 +21,14 @@ public class UserController {
     }
 
     @GetMapping("{userId}")
-    public ResponseEntity <Optional<AppUser>>getUser(@PathVariable Long userId){
+    public ResponseEntity<Optional<UserDto>> getUser(@PathVariable Long userId){
 
        var appuser= userService.getUsersById(userId);
        return  ResponseEntity.ok(appuser);
     }
 
     @PostMapping
-    public ResponseEntity <Optional<AppUser>> registerNewUser(@RequestBody AppUser appUser){
+    public ResponseEntity<Optional<UserDto>> registerNewUser(@RequestBody AppUser appUser){
 
         userService.addNewUser(appUser);
         var appuser= userService.getUserByUsername(appUser.getUsername());
@@ -45,12 +46,12 @@ public class UserController {
     }
 
     @PutMapping(path = "{userId}")
-    public ResponseEntity<Optional<AppUser>> updateUser(@PathVariable("userId") Long userId,
-                           @RequestParam(required = false) String username,
-                           @RequestParam(required = false) String name,
-                           @RequestParam(required = false) String email,
-                           @RequestParam(required = false) String photo,
-                           @RequestParam(required = false) String password){
+    public ResponseEntity<Optional<UserDto>> updateUser(@PathVariable("userId") Long userId,
+                                                        @RequestParam(required = false) String username,
+                                                        @RequestParam(required = false) String name,
+                                                        @RequestParam(required = false) String email,
+                                                        @RequestParam(required = false) String photo,
+                                                        @RequestParam(required = false) String password){
 
                             userService.updateUser(userId,username,name,email,photo,password);
                             var appuser= userService.getUsersById(userId);
