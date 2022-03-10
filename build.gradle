@@ -7,7 +7,7 @@ plugins {
 jar {
 	manifest {
 		attributes(
-				'Main-Class': 'app.ultratechies.api'
+				'Main-Class': 'app.ultratechies.api.Application'
 		)
 	}
 }
