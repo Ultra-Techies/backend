@@ -1,6 +1,8 @@
 package app.ultratechies.api.AppUsers;
 
 import app.ultratechies.api.AppUsers.DTO.UserDTO;
+
+import app.ultratechies.api.exceptions.AppUserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -101,8 +103,13 @@ public class UserService {
         return userRepository.findById(id).map(this::convertEntityToDto);
     }
 
+public AppUser getAppUser(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new AppUserNotFoundException("User does not exist"));
+    }
 
-    private UserDTO convertEntityToDto(AppUser appuser){
+    public Optional <AppUser> getUserByUsername(String username) {
+      private UserDTO convertEntityToDto(AppUser appuser){
         UserDTO userdto= new UserDTO();
         userdto.setId(appuser.getId());
         userdto.setUsername(appuser.getUsername());
