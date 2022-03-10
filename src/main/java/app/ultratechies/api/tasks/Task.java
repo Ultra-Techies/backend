@@ -8,7 +8,6 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.Instant;
 
-import static javax.persistence.FetchType.LAZY;
 
 
 @Entity
@@ -30,13 +29,13 @@ public class Task {
     @Column
     private String description;
     @Column
-    Instant date;
+    Instant dueDate;
+    @Column
+    Instant reminder;
     @Column
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne
     private AppUser appUser;
-    @Column
-    Long userId;
 
 }
