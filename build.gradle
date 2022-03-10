@@ -27,11 +27,8 @@ dependencies {
 
 }
 
-jar {
-	manifest {
-		attributes 'Main-Class': 'app.ultratechies.api.Application'
-	}
-}
+
+
 
 
 tasks.named('test') {
