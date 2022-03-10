@@ -1,11 +1,11 @@
 package app.ultratechies.api.tasks;
 
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/task")
@@ -15,22 +15,26 @@ public class TaskController {
     final TaskService taskService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<List<Task>>> getTaskByUserId(@PathVariable Long id){
+    public ResponseEntity <List<TaskDTO>> getTaskByUserId(@PathVariable Long id){
         var task = taskService.getTaskByUserId(id);
         return ResponseEntity.ok(task);
     }
 
     @PostMapping("/add/{userId}")
-    public ResponseEntity<Task> createNewTask(@PathVariable Long userId ,@RequestBody TaskDTO dto){
-        var newTask = taskService.createTaskAndSave(userId,dto);
-        return ResponseEntity.ok(newTask);
+    public ResponseEntity<TaskDTO> createNewTask(@PathVariable Long userId ,@RequestBody TaskDTO taskDTO){
+        ModelMapper modelMapper = new ModelMapper();
+        var newTask = taskService.createTaskAndSave(userId,taskDTO);
+        TaskDTO dto = modelMapper.map(newTask, TaskDTO.class);
+        return ResponseEntity.ok(dto);
     }
 
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody TaskDTO taskDTO){
+    public ResponseEntity<TaskDTO> updateTask(@PathVariable Long id, @RequestBody TaskDTO taskDTO){
         var updateTask = taskService.updateTaskAndSave(id,taskDTO);
-        return ResponseEntity.ok(updateTask);
+        ModelMapper modelMapper = new ModelMapper();
+        TaskDTO dto = modelMapper.map(updateTask, TaskDTO.class);
+        return ResponseEntity.ok(dto);
     }
 
 
