@@ -4,13 +4,6 @@ plugins {
 	id 'java'
 }
 
-jar {
-	manifest {
-		attributes(
-				'Main-Class': 'app.ultratechies.api.Application'
-		)
-	}
-}
 
 group = 'app.ultratechies'
 version = '0.0.1-SNAPSHOT'
@@ -33,6 +26,13 @@ dependencies {
 	implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.1.1'
 
 }
+
+jar {
+	manifest {
+		attributes 'Main-Class': 'app.ultratechies.api.Application'
+	}
+}
+
 
 tasks.named('test') {
 	useJUnitPlatform()
