@@ -8,8 +8,10 @@ import lombok.*;
 import org.springframework.stereotype.Service;
 
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,8 +30,8 @@ public class TaskService {
         return  Task.builder()
                 .title(dto.getTitle())
                 .description(dto.description)
-                .userId(userId)
-                .date(DateTimeUtil.convertStringToInstant(dto.getDate()))
+                .dueDate(DateTimeUtil.convertStringToInstant(dto.getDueDate()))
+                .reminder(DateTimeUtil.convertStringToInstant(dto.getReminder()))
                 .appUser(userService.getAppUser(userId))
                 .status(TaskStatus.created)
                 .build();
@@ -40,14 +42,7 @@ public class TaskService {
         return save(newTask);
     }
 
-    public TaskDTO convertTaskToTaskDTO(Task task){
-        return TaskDTO.builder()
-                .title(task.getTitle())
-                .description(task.getDescription())
-                .date(DateTimeUtil.convertInstantToString(task.getDate()))
-                .status(task.getStatus().toString())
-                .build();
-    }
+
 
     public Task updateTask(Long id, TaskDTO dto){
         Optional<Task> task = taskRepository.findById(id);
@@ -56,7 +51,8 @@ public class TaskService {
             updatedTask = task.get();
             updatedTask.setTitle(dto.getTitle());
             updatedTask.setDescription(dto.getDescription());
-            updatedTask.setDate(DateTimeUtil.convertStringToInstant(dto.getDate()));
+            updatedTask.setDueDate(DateTimeUtil.convertStringToInstant(dto.getDueDate()));
+            updatedTask.setReminder(DateTimeUtil.convertStringToInstant(dto.getReminder()));
             updatedTask.setStatus(TaskStatus.valueOf(dto.getStatus()));
 
         }
@@ -67,11 +63,27 @@ public class TaskService {
         return save(updateTask(id,dto));
     }
 
-    public Optional<List<Task>> getTaskByUserId(Long id){
+    public List<TaskDTO> getTaskByUserId(Long id) {
         Optional<AppUser> user = userService.getUsersById(id);
         if(user.isPresent()){
-        return taskRepository.findAllByUserId(id);}
-        else return Optional.empty();
+        return taskRepository
+                .findAllByAppUser_Id(id)
+                .stream()
+                .map(this::convertTaskToTaskDTO)
+                .collect(Collectors.toList());}
+        else return Collections.emptyList();
+    }
+
+
+    public TaskDTO convertTaskToTaskDTO(Task task){
+        return TaskDTO.builder()
+                .id(task.getId())
+                .title(task.getTitle())
+                .description(task.getDescription())
+                .dueDate(DateTimeUtil.convertInstantToString(task.getDueDate()))
+                .reminder(DateTimeUtil.convertInstantToString(task.getReminder()))
+                .status(task.getStatus().toString())
+                .build();
     }
 
     public Task findByIdOrThrow(Long taskId){

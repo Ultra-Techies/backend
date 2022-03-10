@@ -10,8 +10,10 @@ import lombok.*;
 @AllArgsConstructor
 public class TaskDTO {
 
+    Long id;
     String title;
     String description;
-    String date;
+    String dueDate;
+    String reminder;
     String status;
 }
