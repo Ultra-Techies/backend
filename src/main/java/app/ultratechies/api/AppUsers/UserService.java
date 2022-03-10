@@ -1,7 +1,6 @@
 package app.ultratechies.api.AppUsers;
 
-import app.ultratechies.api.AppUsers.DTO.UserDTO;
-
+import app.ultratechies.api.AppUsers.UserDTO.UserDto;
 import app.ultratechies.api.exceptions.AppUserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -89,33 +88,31 @@ public class UserService {
                         }
     }
 
-
-    public Optional <UserDTO> getUserByUsername(String username) {
-
-        return userRepository.findAppUserByUsername(username).map(this::convertEntityToDto);
-    }
-
-    public Optional<UserDTO> getUsersById(Long id){
+    public Optional<UserDto> getUsersById(Long id) {
         boolean exists= userRepository.existsById(id);
         if (!exists){
             throw new IllegalStateException("user with userId:"+ id +" does not exist!");
         }
-        return userRepository.findById(id).map(this::convertEntityToDto);
+        return (Optional<UserDto>) userRepository.findById(id).map(this::convertUserDto);
     }
 
-public AppUser getAppUser(Long id) {
+    public AppUser getAppUser(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new AppUserNotFoundException("User does not exist"));
     }
 
-    public Optional <AppUser> getUserByUsername(String username) {
-      private UserDTO convertEntityToDto(AppUser appuser){
-        UserDTO userdto= new UserDTO();
-        userdto.setId(appuser.getId());
-        userdto.setUsername(appuser.getUsername());
-        userdto.setName(appuser.getName());
-        userdto.setEmail(appuser.getEmail());
-        userdto.setPhoto(appuser.getPhoto());
+    public Optional<UserDto> getUserByUsername(String username) {
+
+        return userRepository.findAppUserByUsername(username).map(this::convertUserDto);
+    }
+
+    private UserDto convertUserDto(AppUser appUser){
+        UserDto userdto = new UserDto();
+        userdto.setId(appUser.getId());
+        userdto.setUsername(appUser.getUsername());
+        userdto.setName(appUser.getName());
+        userdto.setEmail(appUser.getEmail());
+        userdto.setPhoto(appUser.getPhoto());
 
         return userdto;
     }

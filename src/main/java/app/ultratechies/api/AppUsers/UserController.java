@@ -1,6 +1,6 @@
 package app.ultratechies.api.AppUsers;
 
-import app.ultratechies.api.AppUsers.DTO.UserDTO;
+import app.ultratechies.api.AppUsers.UserDTO.UserDto;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,14 +21,14 @@ public class UserController {
     }
 
     @GetMapping("{userId}")
-    public ResponseEntity<Optional<UserDTO>> getUser(@PathVariable Long userId){
+    public ResponseEntity<Optional<UserDto>> getUser(@PathVariable Long userId){
 
        var appuser= userService.getUsersById(userId);
        return  ResponseEntity.ok(appuser);
     }
 
     @PostMapping
-    public ResponseEntity<Optional<UserDTO>> registerNewUser(@RequestBody AppUser appUser){
+    public ResponseEntity<Optional<UserDto>> registerNewUser(@RequestBody AppUser appUser){
 
         userService.addNewUser(appUser);
         var appuser= userService.getUserByUsername(appUser.getUsername());
@@ -46,7 +46,7 @@ public class UserController {
     }
 
     @PutMapping(path = "{userId}")
-    public ResponseEntity<Optional<UserDTO>> updateUser(@PathVariable("userId") Long userId,
+    public ResponseEntity<Optional<UserDto>> updateUser(@PathVariable("userId") Long userId,
                                                         @RequestParam(required = false) String username,
                                                         @RequestParam(required = false) String name,
                                                         @RequestParam(required = false) String email,
