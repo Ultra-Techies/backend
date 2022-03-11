@@ -10,8 +10,13 @@ group = 'app.ultratechies'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
-repositories {
-	mavenCentral()
+allprojects {
+	apply plugin: 'application'
+	apply plugin: 'java'
+
+	repositories {
+		mavenCentral()
+	}
 }
 
 dependencies {
@@ -39,5 +44,3 @@ jar {
 tasks.named('test') {
 	useJUnitPlatform()
 }
-
-apply plugin: 'application'
