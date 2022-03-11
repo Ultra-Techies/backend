@@ -38,3 +38,6 @@ jar {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+apply plugin: 'application'
+mainClassName = 'app.ultratechies.api.Application'
