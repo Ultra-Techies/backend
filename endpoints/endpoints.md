@@ -32,11 +32,11 @@ mock_response:
  "profile_photo":"https://dummyimage.com/161x100.png"}
 ```
 
-- `DELETE` method: parameters: `(id)` response: `{"deleted successfully"}` description: deletes user
+- `DELETE` method: parameters: `(id)` response: `{"message":"deleted successfully"}` description: deletes user
 
 mock_response:
 ```json
-{"deleted successfully"}
+{"message":"deleted successfully"}
 ```
 
 
