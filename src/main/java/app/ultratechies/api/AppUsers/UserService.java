@@ -1,5 +1,6 @@
 package app.ultratechies.api.AppUsers;
 
+import app.ultratechies.api.AppUsers.UserDTO.UserDto;
 import app.ultratechies.api.exceptions.AppUserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -87,12 +88,12 @@ public class UserService {
                         }
     }
 
-    public Optional <AppUser> getUsersById(Long id) {
+    public Optional<UserDto> getUsersById(Long id) {
         boolean exists= userRepository.existsById(id);
         if (!exists){
             throw new IllegalStateException("user with userId:"+ id +" does not exist!");
         }
-        return userRepository.findById(id);
+        return (Optional<UserDto>) userRepository.findById(id).map(this::convertUserDto);
     }
 
     public AppUser getAppUser(Long id) {
@@ -100,8 +101,19 @@ public class UserService {
                 .orElseThrow(() -> new AppUserNotFoundException("User does not exist"));
     }
 
-    public Optional <AppUser> getUserByUsername(String username) {
+    public Optional<UserDto> getUserByUsername(String username) {
 
-        return userRepository.findAppUserByUsername(username);
+        return userRepository.findAppUserByUsername(username).map(this::convertUserDto);
+    }
+
+    private UserDto convertUserDto(AppUser appUser){
+        UserDto userdto = new UserDto();
+        userdto.setId(appUser.getId());
+        userdto.setUsername(appUser.getUsername());
+        userdto.setName(appUser.getName());
+        userdto.setEmail(appUser.getEmail());
+        userdto.setPhoto(appUser.getPhoto());
+
+        return userdto;
     }
 }

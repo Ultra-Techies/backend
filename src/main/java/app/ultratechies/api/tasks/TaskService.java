@@ -1,6 +1,7 @@
 package app.ultratechies.api.tasks;
 
 import app.ultratechies.api.AppUsers.AppUser;
+import app.ultratechies.api.AppUsers.UserDTO.UserDto;
 import app.ultratechies.api.AppUsers.UserService;
 import app.ultratechies.api.exceptions.TaskNotfoundException;
 import app.ultratechies.api.utils.DateTimeUtil;
@@ -64,7 +65,7 @@ public class TaskService {
     }
 
     public List<TaskDTO> getTaskByUserId(Long id) {
-        Optional<AppUser> user = userService.getUsersById(id);
+        Optional<UserDto> user = userService.getUsersById(id);
         if(user.isPresent()){
         return taskRepository
                 .findAllByAppUser_Id(id)
