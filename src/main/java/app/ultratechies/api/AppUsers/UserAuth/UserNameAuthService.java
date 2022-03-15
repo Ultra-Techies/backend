@@ -1,4 +1,4 @@
-package app.ultratechies.api.AppUsers;
+package app.ultratechies.api.AppUsers.UserAuth;
 
 import app.ultratechies.api.AppUsers.AppUser;
 import app.ultratechies.api.AppUsers.UserDTO.UserDto;
@@ -10,13 +10,13 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public class UserAuthService {
+public class UserNameAuthService {
 
     @Autowired
     private final UserRepository userRepository;
 
     @Autowired
-    public UserAuthService(UserRepository userRepository){
+    public UserNameAuthService(UserRepository userRepository){
         this.userRepository=userRepository;
     }
 
@@ -31,7 +31,7 @@ public class UserAuthService {
             }
             else {
                 throw new IllegalStateException("Username and password do not match!");
-                        }
+            }
         }
         else {
             throw  new IllegalStateException("User with username "+username+" does not exist!");
