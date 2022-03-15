@@ -1,7 +1,9 @@
 package app.ultratechies.api.tasks;
 
 import lombok.RequiredArgsConstructor;
+import org.json.JSONObject;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,6 +43,8 @@ public class TaskController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteTask(@PathVariable Long id){
         taskService.deleteTask(id);
-        return ResponseEntity.ok("Task deleted successfully");
+        JSONObject deleteMessage= new JSONObject();
+        deleteMessage.put("message","Task deleted successfully!");
+        return ResponseEntity.status(HttpStatus.OK).body(deleteMessage.toString());
     }
 }
