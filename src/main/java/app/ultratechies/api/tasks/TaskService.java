@@ -2,6 +2,7 @@ package app.ultratechies.api.tasks;
 
 import app.ultratechies.api.AppUsers.UserDTO.UserDto;
 import app.ultratechies.api.AppUsers.UserService;
+import app.ultratechies.api.exceptions.BadRequestException;
 import app.ultratechies.api.exceptions.TaskNotfoundException;
 import app.ultratechies.api.utils.DateTimeUtil;
 import lombok.*;
@@ -27,6 +28,8 @@ public class TaskService {
 
     public Task convertDTOtoTask(Long userId,TaskDTO dto){
 
+        checkForNull(dto);
+
         return  Task.builder()
                 .title(dto.getTitle())
                 .description(dto.description)
@@ -42,7 +45,35 @@ public class TaskService {
         return save(newTask);
     }
 
+    private void checkForNull(TaskDTO dto) {
 
+        if (dto == null) {
+            throw new BadRequestException(
+                    "request body is null"
+            );
+        }
+        if (dto.getTitle() == null) {
+            throw new BadRequestException(
+                    "Title cannot be null"
+            );
+        }
+        if (dto.getDescription() == null) {
+            throw new BadRequestException(
+                    "Description cannot be null"
+            );
+        }
+        if (dto.getCreatedTime()== null) {
+            throw new BadRequestException(
+                    "created time cannot be null"
+            );
+        }
+        if (dto.getDueDate() == null) {
+            throw new BadRequestException(
+                    "Due date cannot be null"
+            );
+        }
+
+    }
 
     public Task updateTask(Long id, TaskDTO dto){
         Task task = findByIdOrThrow(id);
