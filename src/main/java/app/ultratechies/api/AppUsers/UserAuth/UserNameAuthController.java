@@ -20,7 +20,7 @@ public class UserNameAuthController {
         this.userNameAuthService = userAuthService;
     }
 
-    @GetMapping()
+    @PostMapping()
     public ResponseEntity<Optional<UserDto>> getUser(@RequestBody AppUser appUser){
         Optional<UserDto> appuser=userNameAuthService.authUser(appUser.getUsername(), appUser.getPassword());
         return ResponseEntity.ok(appuser);
