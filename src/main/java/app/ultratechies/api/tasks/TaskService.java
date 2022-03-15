@@ -31,7 +31,6 @@ public class TaskService {
                 .title(dto.getTitle())
                 .description(dto.description)
                 .dueDate(DateTimeUtil.convertStringToInstant(dto.getDueDate()))
-                .reminder(DateTimeUtil.convertStringToInstant(dto.getReminder()))
                 .createdTime(DateTimeUtil.convertStringToInstant(dto.getCreatedTime()))
                 .appUser(userService.getAppUser(userId))
                 .status(TaskStatus.created)
@@ -50,7 +49,6 @@ public class TaskService {
         task.setTitle(dto.getTitle());
         task.setDescription(dto.getDescription());
         task.setDueDate(DateTimeUtil.convertStringToInstant(dto.getDueDate()));
-        task.setReminder(DateTimeUtil.convertStringToInstant(dto.getReminder()));
         task.setCreatedTime(DateTimeUtil.convertStringToInstant(dto.getCreatedTime()));
         task.setStatus(TaskStatus.valueOf(dto.getStatus()));
 
@@ -79,7 +77,6 @@ public class TaskService {
                 .title(task.getTitle())
                 .description(task.getDescription())
                 .dueDate(DateTimeUtil.convertInstantToString(task.getDueDate()))
-                .reminder(DateTimeUtil.convertInstantToString(task.getReminder()))
                 .status(task.getStatus().toString())
                 .build();
     }
