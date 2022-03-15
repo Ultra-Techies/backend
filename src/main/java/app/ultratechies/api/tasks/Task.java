@@ -33,6 +33,8 @@ public class Task {
     @Column
     Instant reminder;
     @Column
+    Instant createdTime;
+    @Column
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
     @ManyToOne

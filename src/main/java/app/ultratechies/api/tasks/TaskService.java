@@ -1,6 +1,5 @@
 package app.ultratechies.api.tasks;
 
-import app.ultratechies.api.AppUsers.AppUser;
 import app.ultratechies.api.AppUsers.UserDTO.UserDto;
 import app.ultratechies.api.AppUsers.UserService;
 import app.ultratechies.api.exceptions.TaskNotfoundException;
@@ -33,6 +32,7 @@ public class TaskService {
                 .description(dto.description)
                 .dueDate(DateTimeUtil.convertStringToInstant(dto.getDueDate()))
                 .reminder(DateTimeUtil.convertStringToInstant(dto.getReminder()))
+                .createdTime(DateTimeUtil.convertStringToInstant(dto.getCreatedTime()))
                 .appUser(userService.getAppUser(userId))
                 .status(TaskStatus.created)
                 .build();
@@ -46,18 +46,15 @@ public class TaskService {
 
 
     public Task updateTask(Long id, TaskDTO dto){
-        Optional<Task> task = taskRepository.findById(id);
-        Task updatedTask = null; //TODO add exception to prevent possible null pointer exception
-        if(task.isPresent()){
-            updatedTask = task.get();
-            updatedTask.setTitle(dto.getTitle());
-            updatedTask.setDescription(dto.getDescription());
-            updatedTask.setDueDate(DateTimeUtil.convertStringToInstant(dto.getDueDate()));
-            updatedTask.setReminder(DateTimeUtil.convertStringToInstant(dto.getReminder()));
-            updatedTask.setStatus(TaskStatus.valueOf(dto.getStatus()));
+        Task task = findByIdOrThrow(id);
+        task.setTitle(dto.getTitle());
+        task.setDescription(dto.getDescription());
+        task.setDueDate(DateTimeUtil.convertStringToInstant(dto.getDueDate()));
+        task.setReminder(DateTimeUtil.convertStringToInstant(dto.getReminder()));
+        task.setCreatedTime(DateTimeUtil.convertStringToInstant(dto.getCreatedTime()));
+        task.setStatus(TaskStatus.valueOf(dto.getStatus()));
 
-        }
-        return updatedTask;
+        return task;
     }
 
     public Task updateTaskAndSave(Long id, TaskDTO dto){
