@@ -1,5 +1,6 @@
 package app.ultratechies.api.tasks;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.modelmapper.ModelMapper;
@@ -17,12 +18,14 @@ public class TaskController {
 
     final TaskService taskService;
 
+    @ApiOperation("Get All Tasks By User ID")
     @GetMapping("/{id}")
     public ResponseEntity <List<TaskDTO>> getTaskByUserId(@PathVariable Long id){
         var task = taskService.getTaskByUserId(id);
         return ResponseEntity.ok(task);
     }
 
+    @ApiOperation("Create New Task By User ID")
     @PostMapping("/add/{userId}")
     public ResponseEntity<TaskDTO> createNewTask(@PathVariable Long userId ,@RequestBody TaskDTO taskDTO){
         ModelMapper modelMapper = new ModelMapper();
@@ -32,6 +35,7 @@ public class TaskController {
     }
 
 
+    @ApiOperation("Update Task By Task ID")
     @PutMapping("/update/{id}")
     public ResponseEntity<TaskDTO> updateTask(@PathVariable Long id, @RequestBody TaskDTO taskDTO){
         var updateTask = taskService.updateTaskAndSave(id,taskDTO);
@@ -40,7 +44,7 @@ public class TaskController {
         return ResponseEntity.ok(dto);
     }
 
-
+    @ApiOperation("Delete Task By Task ID")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteTask(@PathVariable Long id){
         taskService.deleteTask(id);
