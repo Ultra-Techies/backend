@@ -23,11 +23,15 @@ public class UserService {
     public void addNewUser(AppUser appUser) {
 
         Optional<AppUser> userByUsername = userRepository.findAppUserByUsername(appUser.getUsername());
+        Optional<AppUser> userByEmail = userRepository.findAppUserByEmail(appUser.getEmail());
 
         if (userByUsername.isPresent()) {
-            throw new IllegalStateException("username already exists!");
+            throw new IllegalStateException("User with username "+ appUser.getUsername()+" already exists!");
         }
-        userRepository.save(appUser);
+        else if (userByEmail.isPresent()){
+            throw new IllegalStateException("User with email "+ appUser.getEmail()+" already exists");
+        }
+        else {userRepository.save(appUser);}
 
     }
 
@@ -43,51 +47,52 @@ public class UserService {
     @Transactional
     public void updateUser(Long userId, String username, String name, String email, String photo, String password) {
 
-                AppUser appUser= userRepository.findById(userId)
-                        .orElseThrow(()-> new IllegalStateException("user with userId: "+ userId+" does not exist!"));
+        AppUser appUser = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalStateException("user with userId: " + userId + " does not exist!"));
 
-                        if (username!= null &&
-                                username.length()>0 &&
-                                !Objects.equals(appUser.getUsername(),username)){
-                            Optional<AppUser> userByUsername= userRepository.findAppUserByUsername(username);
-                            if (userByUsername.isPresent()){
-                                throw new IllegalStateException("username already exists!");
-                            }
-                            appUser.setUsername(username);
-                        }
+        if (username != null &&
+                username.length() > 0 &&
+                !Objects.equals(appUser.getUsername(), username)) {
+            Optional<AppUser> userByUsername = userRepository.findAppUserByUsername(username);
+            if (userByUsername.isPresent()) {
+                throw new IllegalStateException("User with username " + username + " already exists!");
+            } else {
+                appUser.setUsername(username);
+            }
+        }
 
-                        if (name!= null &&
-                                name.length()>0 &&
-                                !Objects.equals(appUser.getName(),name)){
+        if (name != null &&
+                name.length() > 0 &&
+                !Objects.equals(appUser.getName(), name)) {
 
-                            appUser.setName(name);
-                        }
+            appUser.setName(name);
+        }
 
-                        if (email!= null &&
-                                email.length()>0 &&
-                                !Objects.equals(appUser.getEmail(),email)){
-                            Optional<AppUser> userByEmail = userRepository.findAppUserByEmail(email);
-                            if (userByEmail.isPresent()) {
-                                throw new IllegalStateException("email taken!");
-                            }
-                            appUser.setEmail(email);
-                        }
+        if (email != null &&
+                email.length() > 0 &&
+                !Objects.equals(appUser.getEmail(), email)) {
+            Optional<AppUser> userByEmail = userRepository.findAppUserByEmail(email);
+            if (userByEmail.isPresent()) {
+                throw new IllegalStateException("User with email " + appUser.getEmail() + " already exists");
+            } else {
+                appUser.setEmail(email);
+            }
 
-                        if (password!= null &&
-                                password.length()>0 &&
-                                !Objects.equals(appUser.getPassword(),password)){
+            if (password != null &&
+                    password.length() > 0 &&
+                    !Objects.equals(appUser.getPassword(), password)) {
 
-                            appUser.setPassword(password);
-                        }
+                appUser.setPassword(password);
+            }
 
-                        if (photo!= null &&
-                                photo.length()>0 &&
-                                !Objects.equals(appUser.getPhoto(),photo)){
+            if (photo != null &&
+                    photo.length() > 0 &&
+                    !Objects.equals(appUser.getPhoto(), photo)) {
 
-                            appUser.setPhoto(photo);
-                        }
+                appUser.setPhoto(photo);
+            }
+        }
     }
-
     public Optional<UserDto> getUsersById(Long id) {
         boolean exists= userRepository.existsById(id);
         if (!exists){
