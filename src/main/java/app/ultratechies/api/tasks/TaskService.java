@@ -45,7 +45,7 @@ public class TaskService {
         return save(newTask);
     }
 
-    private void checkForNull(TaskDTO dto) {
+    public void checkForNull(TaskDTO dto) {
 
         if (dto == null) {
             throw new BadRequestException(
