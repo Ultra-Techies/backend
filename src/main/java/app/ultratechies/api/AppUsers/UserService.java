@@ -73,7 +73,7 @@ public class UserService {
                 !Objects.equals(appUser.getEmail(), email)) {
             Optional<AppUser> userByEmail = userRepository.findAppUserByEmail(email);
             if (userByEmail.isPresent()) {
-                throw new IllegalStateException("User with email " + appUser.getEmail() + " already exists");
+                throw new IllegalStateException("User with email " + email + " already exists");
             } else {
                 appUser.setEmail(email);
             }
@@ -98,7 +98,7 @@ public class UserService {
         if (!exists){
             throw new IllegalStateException("user with userId:"+ id +" does not exist!");
         }
-        return (Optional<UserDto>) userRepository.findById(id).map(this::convertUserDto);
+        return  userRepository.findById(id).map(this::convertUserDto);
     }
 
     public AppUser getAppUser(Long id) {
