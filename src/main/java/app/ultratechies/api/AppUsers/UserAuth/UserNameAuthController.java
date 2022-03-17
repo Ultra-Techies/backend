@@ -21,7 +21,7 @@ public class UserNameAuthController {
         this.userNameAuthService = userAuthService;
     }
 
-    @PostMapping()
+    @PostMapping("Authenticate User by Username and Password")
     public ResponseEntity<Optional<UserDto>> getUser(@RequestBody AppUser appUser){
         Optional<UserDto> appuser=userNameAuthService.authUser(appUser.getUsername(), appUser.getPassword());
         return ResponseEntity.ok(appuser);

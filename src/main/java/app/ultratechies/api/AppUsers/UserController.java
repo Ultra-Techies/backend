@@ -1,6 +1,7 @@
 package app.ultratechies.api.AppUsers;
 
 import app.ultratechies.api.AppUsers.UserDTO.UserDto;
+import io.swagger.annotations.ApiOperation;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    @ApiOperation("Get User by Id")
     @GetMapping("{userId}")
     public ResponseEntity<Optional<UserDto>> getUser(@PathVariable Long userId){
 
@@ -28,6 +30,7 @@ public class UserController {
        return  ResponseEntity.ok(appuser);
     }
 
+    @ApiOperation("Register New User")
     @PostMapping
     public ResponseEntity<Optional<UserDto>> registerNewUser(@RequestBody AppUser appUser){
 
@@ -37,6 +40,7 @@ public class UserController {
         return ResponseEntity.ok(appuser);
     }
 
+    @ApiOperation("Delete User by Id")
     @DeleteMapping(path = "{userId}")
     public ResponseEntity<String> deleteUser(@PathVariable("userId") Long userId){
 
@@ -46,6 +50,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(deleteMessage.toString());
     }
 
+    @ApiOperation("Update User Details")
     @PutMapping(path = "{userId}")
     public ResponseEntity<Optional<UserDto>> updateUser(@PathVariable("userId") Long userId,
                                                         @RequestParam(required = false) String username,
