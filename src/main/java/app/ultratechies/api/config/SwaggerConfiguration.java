@@ -17,7 +17,7 @@ public class SwaggerConfiguration {
     public Docket toDoListApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage("app.ultratechies.api"))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo());
