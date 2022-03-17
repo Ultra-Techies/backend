@@ -4,6 +4,8 @@ import app.ultratechies.api.AppUsers.AppUser;
 import app.ultratechies.api.AppUsers.UserDTO.UserDto;
 import app.ultratechies.api.AppUsers.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -13,18 +15,21 @@ import java.util.Optional;
 public class UserEmailAuthService {
     @Autowired
     private final UserRepository userRepository;
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserEmailAuthService(UserRepository userRepository){
         this.userRepository=userRepository;
+        this.passwordEncoder= new BCryptPasswordEncoder();
     }
 
     public Optional<UserDto> authUser(String email, String password){
         Optional<AppUser> userByEmail= userRepository.findAppUserByEmail(email);
 
+
         if (userByEmail.isPresent()) {
             if ((Objects.equals(email, userByEmail.get().getEmail())) &&
-                    (Objects.equals(password, userByEmail.get().getPassword()))) {
+                    (passwordEncoder.matches(password, userByEmail.get().getPassword()))) {
 
                 return userByEmail.map(this::convertUserDto);
             }
