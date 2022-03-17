@@ -3,6 +3,8 @@ package app.ultratechies.api.AppUsers;
 import app.ultratechies.api.AppUsers.UserDTO.UserDto;
 import app.ultratechies.api.exceptions.AppUserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -15,9 +17,13 @@ public class UserService {
     @Autowired
     private final UserRepository userRepository;
 
+    PasswordEncoder passwordEncoder;
+
     @Autowired
     public UserService(UserRepository userRepository){
+
         this.userRepository=userRepository;
+        this.passwordEncoder= new BCryptPasswordEncoder();
     }
 
     public void addNewUser(AppUser appUser) {
@@ -31,7 +37,10 @@ public class UserService {
         else if (userByEmail.isPresent()){
             throw new IllegalStateException("User with email "+ appUser.getEmail()+" already exists");
         }
-        else {userRepository.save(appUser);}
+        else {
+            String encodedPassword= this.passwordEncoder.encode(appUser.getPassword());
+            appUser.setPassword(encodedPassword);
+            userRepository.save(appUser);}
 
     }
 
@@ -76,13 +85,14 @@ public class UserService {
                 throw new IllegalStateException("User with email " + email + " already exists");
             } else {
                 appUser.setEmail(email);
-            }
+            }}
 
             if (password != null &&
                     password.length() > 0 &&
                     !Objects.equals(appUser.getPassword(), password)) {
 
-                appUser.setPassword(password);
+                String encodedPassword= passwordEncoder.encode(password);
+                appUser.setPassword(encodedPassword);
             }
 
             if (photo != null &&
@@ -92,7 +102,6 @@ public class UserService {
                 appUser.setPhoto(photo);
             }
         }
-    }
     public Optional<UserDto> getUsersById(Long id) {
         boolean exists= userRepository.existsById(id);
         if (!exists){
