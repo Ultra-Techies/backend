@@ -31,7 +31,7 @@ public class Task {
     @Column
     Instant dueDate;
     @Column
-    Instant reminder;
+    Instant createdTime;
     @Column
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
