@@ -58,9 +58,7 @@ Use the ToDoList Postman collection to test the API. Make sure the ports on Post
 
 # API reference
 
-Easy access to mock responses at the [wiki's](https://github.com/Ultra-Techies/backend/wiki) API page
-
-API reference at `'/endpoints/endpoints.md'`
+API reference at http://localhost:8080/swagger-ui.html#/ when the server is running on port 8080
 
 
 # Deployment
