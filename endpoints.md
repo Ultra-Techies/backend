@@ -106,54 +106,45 @@ mock_responses:
     "path": "/api/user/10"
 }
 ```
+## Tasks
 
+**URL:** `/api/task`
 
-- `GET` method: parameters: `(id)` response: `{for task in tasks:{id:,title:,description:,due_date:,status:}` description: returns all tasks for the user ID
+- `POST` method: parameters: `(id,title, description,dueDate,createdTime,reminder,status)` response: `{id,title, description,dueDate,createdTime,status}` description: creates task, returns created task or returns status code 500 if user with user Id supplied does not exist,
 
-mock_response:
+mock_payload_url:
+
+`http://localhost:8080/api/task/add/25`
+
+mock_payload:
 ```json
-[{"id":1,"title":"Pick Trash","description":"remember to pick trash in the backyard","due_date":"7/14/2021","status":"created"},
-{"id":2,"title":"Go to hospital","description":"Been feeling funny, need to go to doctor's appointment","due_date":"3/20/2021","status":"done"},
-{"id":3,"title":"Apply for new role","description":"Apply for all the bookmarked roles I did last week","due_date":"4/23/2021","status":"progress"}]
+ {
+         "title": "Go to Home now",
+    "description": "Been feeling funny, need to go to doctor's appointment",
+    "dueDate": "2022-08-18 00:44:21",
+     "reminder": "2022-08-18 00:44:21",
+     "createdTime": "2022-08-18 00:44:21"
+    }
 ```
-
-- `POST`  : method: parameters: `(user_id,title,description,due_date,status)` response: `{id,titledescription,due_date,status}` description: returns task if task has been created 
-
-mock_response:
-```json
-{"id":1,"title":"Pick Trash","description":"remember to pick trash in the backyard","due_date":"7/14/2021","status":"created"}
-```
-
-- `PUT` method: parameters: `(id,title,description,due_date,status)` response: `{id,titledescription,due_date,status}` description: updates task details
-
-mock_response:
-```json
-{"id":1,"title":"Pick Trash","description":"remember to pick trash in the backyard","due_date":"7/14/2021","status":"created"}
-```
-
-- `DELETE` method: parameters: `(id)` response: `{deleted successfully}` description: deletes task
-
-mock_response:
-```json
-{"deleted successfully"}
-```
-
-
-
-3. HTTP: `users/auth` : 
-- `GET` method: parameters: `(username,password)` response: `{
-   "valid":"true/false",
-   "id":123
-}` description: returns valid:true and user id if username and password match to those in db
-
 mock_responses:
 ```json
 {
-   "valid":1
+    "id": 4,
+    "title": "Go to Home now",
+    "description": "Been feeling funny, need to go to doctor's appointment",
+    "dueDate": "2022-08-17T21:44:21Z",
+    "status": "created",
+    "createdTime": "2022-08-17T21:44:21Z"
 }
 ```
 ```json
 {
-   "valid":0
+    "timestamp": "2022-03-17T14:23:55.319+00:00",
+    "status": 500,
+    "error": "Internal Server Error",
+    "message": "User does not exist",
+    "path": "/api/task/add/25"
 }
 ```
+
+- `
