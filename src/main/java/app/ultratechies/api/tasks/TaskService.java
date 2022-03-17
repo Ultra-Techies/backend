@@ -109,6 +109,7 @@ public class TaskService {
                 .description(task.getDescription())
                 .dueDate(DateTimeUtil.convertInstantToString(task.getDueDate()))
                 .status(task.getStatus().toString())
+                .createdTime(DateTimeUtil.convertInstantToString(task.getCreatedTime()))
                 .build();
     }
 
