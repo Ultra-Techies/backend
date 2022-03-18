@@ -121,4 +121,12 @@ public class TaskService {
         findByIdOrThrow(taskId);
         taskRepository.deleteById(taskId);
     }
+
+    public void  deleteTaskByUserId(Long userId){
+        List<TaskDTO> tasksList = getTaskByUserId(userId);
+        for (TaskDTO i : tasksList) {
+            Long task_id=i.getId();
+            taskRepository.deleteById(task_id);
+        }
+    }
 }

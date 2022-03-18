@@ -52,4 +52,13 @@ public class TaskController {
         deleteMessage.put("message","Task deleted successfully!");
         return ResponseEntity.status(HttpStatus.OK).body(deleteMessage.toString());
     }
+
+    @ApiOperation("Delete Tasks by User Id")
+    @DeleteMapping("deletebyuserid/{id}")
+    public ResponseEntity<String> deleteByUserId(@PathVariable Long id){
+        taskService.deleteTaskByUserId(id);
+        JSONObject deleteMessage= new JSONObject();
+        deleteMessage.put("message","Tasks deleted successfully!");
+        return ResponseEntity.status(HttpStatus.OK).body(deleteMessage.toString());
+    }
 }
