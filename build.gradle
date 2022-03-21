@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.6.4'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'com.google.cloud.tools.appengine' version '2.4.2'
 }
 
 group = 'app.ultratechies'
@@ -30,7 +31,22 @@ dependencies {
 	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 
 }
-
-tasks.named('test') {
-	useJUnitPlatform()
+appengine {
+	deploy {   // deploy configuration
+		promote = true              // default - & make this the current version
+		projectId = 'todolist-backend-344809'
+		version = 'GCLOUD_CONFIG'
+	}
 }
+
+
+jar {
+	manifest {
+		attributes(
+				'Main-Class': 'app.ultratechies.api.Application'
+		)
+	}
+}
+//tasks.named('test') {
+	//useJUnitPlatform()
+//}
