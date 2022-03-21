@@ -38,6 +38,9 @@ public class UserService {
             throw new IllegalStateException("User with email "+ appUser.getEmail()+" already exists");
         }
         else {
+            if (appUser.getPhoto()==null){
+                appUser.setPhoto("https://pixabay.com/photos/chafdin-security-metal-iron-3481377/");
+            }
             String encodedPassword= this.passwordEncoder.encode(appUser.getPassword());
             appUser.setPassword(encodedPassword);
             userRepository.save(appUser);}
