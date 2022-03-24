@@ -39,7 +39,7 @@ public class UserService {
         }
         else {
             if (appUser.getPhoto()==null){
-                appUser.setPhoto("https://pixabay.com/photos/chafdin-security-metal-iron-3481377/");
+                appUser.setPhoto("https://raw.githubusercontent.com/Ultra-Techies/Todolist-Frontend/develop/src/assets/images/Avatar.png");
             }
             String encodedPassword= this.passwordEncoder.encode(appUser.getPassword());
             appUser.setPassword(encodedPassword);
