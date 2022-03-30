@@ -5,8 +5,8 @@ plugins {
 }
 
 group = 'app.ultratechies'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+version = 'v1'
+sourceCompatibility = '17'
 
 repositories {
 	mavenCentral()
@@ -33,4 +33,12 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+jar {
+	manifest {
+		attributes(
+				'Main-Class': 'app.ultratechies.api.Application'
+		)
+	}
 }

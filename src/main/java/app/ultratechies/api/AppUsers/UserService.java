@@ -69,9 +69,7 @@ public class UserService {
             if (userByUsername.isPresent()) {
                 throw new IllegalStateException("User with username " + username + " already exists!");
             } else {
-                appUser.
-                    
-                    Username(username);
+                appUser.setUsername(username);
             }
         }
 
